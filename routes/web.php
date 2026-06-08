@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProductController;
 
 Route::get('/', function () {
     return view('home');
@@ -22,8 +23,8 @@ Route::middleware('auth')->group(function () {
         return view('dashboard');
     });
 
+    Route::get('/products', [ProductController::class, 'index']);
     Route::get('/products/create', [ProductController::class, 'create']);
-
     Route::post('/products', [ProductController::class, 'store']);
 
 });
