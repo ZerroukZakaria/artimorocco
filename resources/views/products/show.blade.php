@@ -4,60 +4,86 @@
 
 @section('content')
 
-<div class="row">
+<div class="card border-0 shadow-sm">
 
-    <div class="col-md-6">
+    <div class="card-body p-4">
 
-    @if($product->image)
+        <div class="row g-5">
 
-        <img
-            src="{{ asset('storage/' . $product->image) }}"
-            class="img-fluid rounded"
-            alt="{{ $product->title }}"
-        >
+            <div class="col-lg-6">
 
-    @else
+                @if($product->image)
 
-        <img
-            src="https://placehold.co/600x400"
-            class="img-fluid rounded"
-            alt="{{ $product->title }}"
-        >
+                    <img
+                        src="{{ asset('storage/' . $product->image) }}"
+                        class="img-fluid rounded"
+                        style="width:100%;height:500px;object-fit:cover;"
+                        alt="{{ $product->title }}"
+                    >
 
-    @endif
+                @else
 
-    </div>
+                    <img
+                        src="https://placehold.co/800x600"
+                        class="img-fluid rounded"
+                        style="width:100%;height:500px;object-fit:cover;"
+                        alt="{{ $product->title }}"
+                    >
 
-    <div class="col-md-6">
+                @endif
 
-        <h1>
-            {{ $product->title }}
-        </h1>
+            </div>
 
-        <p class="text-muted">
-            Category:
-            {{ $product->category->name }}
-        </p>
+            <div class="col-lg-6">
 
-        <h3 class="text-success">
-            ${{ number_format($product->price, 2) }}
-        </h3>
+                <span class="badge bg-secondary mb-3">
+                    {{ $product->category->name }}
+                </span>
 
-        <p>
-            {{ $product->description }}
-        </p>
+                <h1 class="fw-bold mb-3">
+                    {{ $product->title }}
+                </h1>
 
-        <hr>
+                <h2 class="text-success mb-4">
+                    ${{ number_format($product->price, 2) }}
+                </h2>
 
-        <h5>
-            Artisan Information
-        </h5>
+                <p class="lead">
+                    {{ $product->description }}
+                </p>
 
-        <a
-            href="/artisans/{{ $product->artisan->id }}"
-        >
-            {{ $product->artisan->name }}
-        </a>
+                <hr class="my-4">
+
+                <div class="card bg-light border-0">
+
+                    <div class="card-body">
+
+                        <h5>
+                            Artisan Information
+                        </h5>
+
+                        <p class="mb-2">
+
+                            <strong>
+                                {{ $product->artisan->name }}
+                            </strong>
+
+                        </p>
+
+                        <a
+                            href="/artisans/{{ $product->artisan->id }}"
+                            class="btn btn-outline-dark"
+                        >
+                            View Artisan Profile
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
 
     </div>
 

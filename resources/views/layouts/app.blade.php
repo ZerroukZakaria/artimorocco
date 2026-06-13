@@ -20,20 +20,29 @@
     >
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+
+<link
+    rel="stylesheet"
+    href="{{ asset('css/app.css') }}"
+>
+
 </head>
 
 
-
-<body>
+<body class="d-flex flex-column min-vh-100">
 
 @include('partials.navbar')
 
-<div
-    class="container-fluid px-4 py-4 mx-auto"
-    style="max-width: 1800px;"
->
-    @yield('content')
-</div>
+<main class="flex-grow-1">
+
+    <div
+        class="container-fluid py-4 mx-auto"
+        style="max-width:1800px;"
+    >
+        @yield('content')
+    </div>
+
+</main>
 
 
 @if(session('success'))
@@ -67,16 +76,23 @@ Swal.fire({
 
 @endif
 
-<footer class="bg-dark text-white mt-5 py-4">
+<footer class="bg-dark text-white footer">
 
-    <div class="container-fluid text-center">
+    <div
+        class="container-fluid py-4 text-center"
+        style="max-width:1800px;"
+    >
+
+        <h5>
+            ArtiMorocco
+        </h5>
 
         <p class="mb-1">
-            ArtiMorocco
+            Discover authentic Moroccan craftsmanship.
         </p>
 
         <small>
-            Connecting Moroccan artisans with customers.
+            © {{ date('Y') }} ArtiMorocco
         </small>
 
     </div>

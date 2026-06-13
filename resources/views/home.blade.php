@@ -44,27 +44,63 @@
 
 <div class="col-md-4">
 
-    <h2>{{ $productCount }}</h2>
+    <div class="card shadow-sm">
 
-    <p>Products</p>
+        <div class="card-body">
+
+            <h1 class="fw-bold">
+                {{ $productCount }}
+            </h1>
+
+            <p class="mb-0">
+                Products
+            </p>
+
+        </div>
+
+    </div>
 
 </div>
-
 <div class="col-md-4">
 
-    <h2>{{ $artisanCount }}</h2>
+    <div class="card shadow-sm">
 
-    <p>Artisans</p>
+        <div class="card-body">
+
+            <h1 class="fw-bold">
+                {{ $artisanCount }}
+            </h1>
+
+            <p class="mb-0">
+                Artisans
+            </p>
+
+        </div>
+
+    </div>
 
 </div>
-
 <div class="col-md-4">
 
-    <h2>{{ $categoryCount }}</h2>
+    <div class="card shadow-sm">
 
-    <p>Categories</p>
+        <div class="card-body">
+
+            <h1 class="fw-bold">
+                {{ $categoryCount }}
+            </h1>
+
+            <p class="mb-0">
+                Categories
+            </p>
+
+        </div>
+
+    </div>
 
 </div>
+
+
 
 
 </div>
@@ -126,8 +162,9 @@
 
 <div class="col-lg-3 col-md-6">
 
-    <div class="card border-0 shadow-sm h-100">
-
+<div
+    class="card product-card shadow-sm h-100"
+>
         @if($product->image)
 
             <img

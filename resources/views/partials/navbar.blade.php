@@ -132,7 +132,7 @@
 @endif
 
                     <li class="nav-item">
-                        <a class="nav-link" href="/dashboard/profile">
+                        <a class="nav-link " href="/dashboard/profile">
                             Profile
                         </a>
                     </li>
