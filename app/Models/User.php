@@ -36,4 +36,11 @@ class User extends Authenticatable
     {
         return $this->hasMany(Product::class);
     }
+
+    public function artisanProfile()
+    {
+        return $this->hasOne(
+            ArtisanProfile::class
+        );
+    }
 }

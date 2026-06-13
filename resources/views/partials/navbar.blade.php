@@ -1,7 +1,8 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container">
-
-        <a class="navbar-brand fw-bold" href="/">
+<div
+    class="container-fluid px-4 mx-auto"
+    style="max-width:1800px;"
+>        <a class="navbar-brand fw-bold" href="/">
             ArtiMorocco
         </a>
 
@@ -25,7 +26,10 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="/products">
+                    <a
+                        class="nav-link {{ request()->is('products*') ? 'active fw-bold' : '' }}"
+                        href="/products"
+                    >
                         Products
                     </a>
                 </li>
@@ -53,10 +57,87 @@
                 @auth
 
                     <li class="nav-item">
-                        <a class="nav-link" href="/dashboard">
-                            Dashboard
+<a
+    class="nav-link {{ request()->is('dashboard*') ? 'active fw-bold' : '' }}"
+    href="/dashboard/products"
+>
+    Dashboard
+</a>
+                        
+                    </li>
+
+@if(auth()->user()->role === 'admin')
+
+<li class="nav-item dropdown">
+
+    <a
+        class="nav-link dropdown-toggle"
+        href="#"
+        role="button"
+        data-bs-toggle="dropdown"
+    >
+        Admin
+    </a>
+
+    <ul class="dropdown-menu">
+
+        <li>
+
+            <a
+                class="dropdown-item"
+                href="/admin"
+            >
+                Dashboard
+            </a>
+
+        </li>
+
+        <li>
+
+            <a
+                class="dropdown-item"
+                href="/admin/users"
+            >
+                Users
+            </a>
+
+        </li>
+
+        <li>
+
+            <a
+                class="dropdown-item"
+                href="/admin/products"
+            >
+                Products
+            </a>
+
+        </li>
+
+        <li>
+
+            <a
+                class="dropdown-item"
+                href="/admin/categories"
+            >
+                Categories
+            </a>
+
+        </li>
+
+    </ul>
+
+</li>
+
+@endif
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/dashboard/profile">
+                            Profile
                         </a>
                     </li>
+
+                    
 
                     <li class="nav-item">
                         <form action="/logout" method="POST">
