@@ -139,18 +139,22 @@
 
                     
 
-                    <li class="nav-item">
-                        <form action="/logout" method="POST">
-                            @csrf
+                <li class="nav-item">
 
-                            <button
-                                type="submit"
-                                class="btn btn-outline-light btn-sm ms-2"
-                            >
-                                Logout
-                            </button>
-                        </form>
-                    </li>
+                    <form action="/logout" method="POST">
+                        @csrf
+
+                        <button
+                            type="submit"
+                            class="nav-link border-0 bg-transparent"
+                            title="Logout"
+                        >
+                            <i class="bi bi-box-arrow-right"></i>
+                        </button>
+
+                    </form>
+
+                </li>
 
                 @endauth
 

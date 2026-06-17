@@ -62,9 +62,15 @@ Route::middleware('auth')->group(function () {
 
     });
 
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    });
+Route::get('/dashboard', function () {
+
+    if (auth()->user()->role === 'admin') {
+        return redirect('/admin');
+    }
+
+    return redirect('/dashboard/products');
+
+})->middleware('auth');
     Route::get( '/dashboard/products', [ProductController::class, 'dashboard'] );
     Route::get('/products', [ProductController::class, 'index']);
     Route::get('/products/create', [ProductController::class, 'create']);

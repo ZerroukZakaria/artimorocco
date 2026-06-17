@@ -10,7 +10,107 @@
 
 <div class="card shadow">
 
+    
+
     <div class="card-body">
+        <div class="row mb-4">
+
+            <div class="col-md-4">
+
+                <div class="card border-0 shadow-sm">
+
+                    <div class="card-body text-center">
+
+                        <h2>{{ $totalUsers }}</h2>
+
+                        <p class="text-muted mb-0">
+                            Total Users
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-4">
+
+                <div class="card border-0 shadow-sm">
+
+                    <div class="card-body text-center">
+
+                        <h2>{{ $totalArtisans }}</h2>
+
+                        <p class="text-muted mb-0">
+                            Artisans
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-4">
+
+                <div class="card border-0 shadow-sm">
+
+                    <div class="card-body text-center">
+
+                        <h2>{{ $totalAdmins }}</h2>
+
+                        <p class="text-muted mb-0">
+                            Admins
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <form
+            method="GET"
+            action="/admin/users"
+            class="mb-4"
+        >
+
+            <div class="row">
+
+                <div class="col-md-10">
+
+                    <input
+                        type="text"
+                        name="search"
+                        class="form-control"
+                        placeholder="Search users..."
+                        value="{{ request('search') }}"
+                    >
+
+                </div>
+
+                <div class="col-md-2 d-flex gap-2">
+
+                    <button
+                        class="btn btn-primary flex-fill"
+                    >
+                        Search
+                    </button>
+
+                    <a
+                        href="/admin/users"
+                        class="btn btn-outline-secondary"
+                    >
+                        Reset
+                    </a>
+
+                </div>
+
+            </div>
+
+        </form>
 
         <table class="table table-striped">
 
@@ -80,32 +180,30 @@
 
                     <td>
 
-                        <form
-                            action="/admin/users/{{ $user->id }}/toggle-role"
-                            method="POST"
-                            class="d-inline"
+                @if(auth()->id() !== $user->id)
+
+                    <form
+                        action="/admin/users/{{ $user->id }}/toggle-role"
+                        method="POST"
+                        class="d-inline"
+                    >
+
+                        @csrf
+                        @method('PATCH')
+
+                        <button
+                            class="btn btn-sm btn-outline-dark"
                         >
 
-                            @csrf
-                            @method('PATCH')
+                            {{ $user->role === 'admin'
+                                ? 'Demote'
+                                : 'Promote' }}
 
-                            <button
-                                class="btn btn-sm btn-warning"
-                            >
+                        </button>
 
-                                @if($user->role === 'admin')
+                    </form>
 
-                                    Demote
-
-                                @else
-
-                                    Promote
-
-                                @endif
-
-                            </button>
-
-                        </form>
+                    @endif
                     </td>
 
                 </tr>

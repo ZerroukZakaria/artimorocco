@@ -4,82 +4,174 @@
 
 @section('content')
 
-<div class="d-flex justify-content-between mb-4">
+<div class="d-flex justify-content-between align-items-center mb-4">
 
-    <h1>My Products</h1>
+    <div>
+
+        <h1 class="fw-bold mb-1">
+            My Products
+        </h1>
+
+        <p class="text-muted fs-5 mb-0">
+            Create, manage and showcase your handmade creations.
+        </p>
+
+    </div>
 
     <a
         href="/products/create"
-        class="btn btn-primary"
+        class="btn btn-dark"
     >
+        <i class="bi bi-plus-circle me-2"></i>
         Add Product
     </a>
 
 </div>
 
-<table class="table table-striped">
+<div class="row mb-5">
 
-    <thead>
-        <tr>
-            <th>Title</th>
-            <th>Price</th>
-            <th>Category</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
+    <div class="col-md-3">
 
-    <tbody>
+        <div class="card shadow-sm border-0">
 
-    @foreach($products as $product)
+            <div class="card-body text-center">
 
-        <tr>
+                <i
+                    class="bi bi-box-seam text-primary"
+                    style="font-size: 3rem;"
+                ></i>
 
-            <td>
-                {{ $product->title }}
-            </td>
+                <h1 class="fw-bold mt-2">
+                    {{ $products->count() }}
+                </h1>
 
-            <td>
-                ${{ number_format($product->price, 2) }}
-            </td>
+                <p class="text-muted mb-0">
+                    Products
+                </p>
 
-            <td>
-                {{ $product->category->name }}
-            </td>
+            </div>
 
-            <td>
+        </div>
 
-                <a
-                    href="/products/{{ $product->id }}/edit"
-                    class="btn btn-warning btn-sm"
+    </div>
+
+</div>
+
+<div class="row">
+
+@forelse($products as $product)
+
+    <div class="col-lg-4 col-md-6 mb-4">
+
+        <div class="card shadow-sm border-0 h-100 product-card">
+
+            @if($product->image)
+
+                <img
+                    src="{{ asset('storage/' . $product->image) }}"
+                    class="card-img-top"
+                    style="height:250px;object-fit:cover;"
+                    alt="{{ $product->title }}"
                 >
-                    Edit
-                </a>
 
-                <form
-                    action="/products/{{ $product->id }}"
-                    method="POST"
-                    class="d-inline delete-form"
+            @else
+
+                <img
+                    src="https://placehold.co/600x400?text=ArtiMorocco"
+                    class="card-img-top"
+                    style="height:250px;object-fit:cover;"
+                    alt="{{ $product->title }}"
                 >
-                    @csrf
-                    @method('DELETE')
 
-                    <button
-                        type="submit"
-                        class="btn btn-danger btn-sm"
-                    >
-                        Delete
-                    </button>
-                </form>
+            @endif
 
-            </td>
+            <div class="card-body">
 
-        </tr>
+                <span class="badge bg-secondary mb-2">
+                    {{ $product->category->name }}
+                </span>
 
-    @endforeach
+                <h5 class="fw-bold">
+                    {{ $product->title }}
+                </h5>
 
-    </tbody>
+                <h4 class="text-success mb-3">
+                    ${{ number_format($product->price, 2) }}
+                </h4>
 
-</table>
+            </div>
+
+            <div class="card-footer bg-white border-0">
+
+<div class="d-flex gap-2">
+
+    <a
+        href="/products/{{ $product->id }}"
+        class="btn btn-outline-dark flex-fill"
+    >
+        View
+    </a>
+
+    <a
+        href="/products/{{ $product->id }}/edit"
+        class="btn btn-outline-secondary flex-fill"
+    >
+        Edit
+    </a>
+
+</div>
+
+<form
+    action="/products/{{ $product->id }}"
+    method="POST"
+    class="delete-form mt-2"
+>
+    @csrf
+    @method('DELETE')
+
+    <button
+        type="submit"
+        class="btn btn-dark w-100"
+    >
+        Delete
+    </button>
+
+</form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+@empty
+
+    <div class="col-12">
+
+        <div class="alert alert-info shadow-sm">
+
+            <h5 class="mb-2">
+                No products yet
+            </h5>
+
+            <p class="mb-3">
+                Start showcasing your craftsmanship by creating your first product.
+            </p>
+
+            <a
+                href="/products/create"
+                class="btn btn-primary"
+            >
+                Create Product
+            </a>
+
+        </div>
+
+    </div>
+
+@endforelse
+
+</div>
 
 @endsection
 

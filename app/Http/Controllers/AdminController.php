@@ -45,14 +45,49 @@ class AdminController extends Controller
     }
 
 
-    public function users()
+    public function users(Request $request)
     {
-        $users = User::latest()
-            ->paginate(15);
+        $query = User::query();
+
+        if ($request->filled('search')) {
+
+            $query->where(
+                'name',
+                'like',
+                '%' . $request->search . '%'
+            )
+            ->orWhere(
+                'email',
+                'like',
+                '%' . $request->search . '%'
+            );
+        }
+
+        $users = $query
+            ->latest()
+            ->paginate(10)
+            ->withQueryString();
+
+        $totalUsers = User::count();
+
+        $totalAdmins = User::where(
+            'role',
+            'admin'
+        )->count();
+
+        $totalArtisans = User::where(
+            'role',
+            'artisan'
+        )->count();
 
         return view(
             'admin.users',
-            compact('users')
+            compact(
+                'users',
+                'totalUsers',
+                'totalAdmins',
+                'totalArtisans'
+            )
         );
     }
 
@@ -82,17 +117,29 @@ class AdminController extends Controller
         );
     }
 
-public function categories()
-{
-    $categories = Category::withCount('products')
-        ->latest()
-        ->paginate(10);
+    public function categories(Request $request)
+    {
+        $query = Category::withCount('products');
 
-    return view(
-        'admin.categories',
-        compact('categories')
-    );
-}
+        if ($request->filled('search')) {
+
+            $query->where(
+                'name',
+                'like',
+                '%' . $request->search . '%'
+            );
+        }
+
+        $categories = $query
+            ->latest()
+            ->paginate(10)
+            ->withQueryString();
+
+        return view(
+            'admin.categories',
+            compact('categories')
+        );
+    }
 
     public function storeCategory(Request $request)
     {

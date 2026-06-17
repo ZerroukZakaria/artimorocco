@@ -4,14 +4,46 @@
 
 @section('content')
 
-<h1 class="mb-4">
+<h1 class="fw-bold mb-4">
     Manage Categories
 </h1>
 
-<div class="card shadow mb-4">
+<div class="row mb-4">
 
-    <div class="card-header">
-        Create Category
+    <div class="col-md-4">
+
+        <div class="card border-0 shadow-sm">
+
+            <div class="card-body text-center">
+
+                <i
+                    class="bi bi-tags fs-1 text-dark"
+                ></i>
+
+                <h2 class="fw-bold mt-2">
+                    {{ $categories->total() }}
+                </h2>
+
+                <p class="text-muted mb-0">
+                    Categories
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="card border-0 shadow-sm mb-4">
+
+    <div class="card-header bg-white">
+
+        <h5 class="mb-0">
+            Create Category
+        </h5>
+
     </div>
 
     <div class="card-body">
@@ -32,6 +64,7 @@
                         name="name"
                         class="form-control"
                         placeholder="Category name"
+                        required
                     >
 
                 </div>
@@ -39,8 +72,9 @@
                 <div class="col-md-2">
 
                     <button
-                        class="btn btn-success w-100"
+                        class="btn btn-dark w-100"
                     >
+                        <i class="bi bi-plus-circle me-1"></i>
                         Create
                     </button>
 
@@ -54,11 +88,52 @@
 
 </div>
 
-<div class="card shadow">
+<div class="card border-0 shadow-sm">
 
     <div class="card-body">
 
-        <table class="table">
+        <form
+            method="GET"
+            action="/admin/categories"
+            class="mb-4"
+        >
+
+            <div class="row">
+
+                <div class="col-md-10">
+
+                    <input
+                        type="text"
+                        name="search"
+                        class="form-control"
+                        placeholder="Search categories..."
+                        value="{{ request('search') }}"
+                    >
+
+                </div>
+
+                <div class="col-md-2 d-flex gap-2">
+
+                    <button
+                        class="btn btn-primary flex-fill"
+                    >
+                        Search
+                    </button>
+
+                    <a
+                        href="/admin/categories"
+                        class="btn btn-outline-secondary"
+                    >
+                        Reset
+                    </a>
+
+                </div>
+
+            </div>
+
+        </form>
+
+        <table class="table table-hover align-middle">
 
             <thead>
 
@@ -75,7 +150,7 @@
 
             <tbody>
 
-            @foreach($categories as $category)
+            @forelse($categories as $category)
 
                 <tr>
 
@@ -83,106 +158,130 @@
                         {{ $category->id }}
                     </td>
 
-                    <td>
+                    <td class="fw-semibold">
                         {{ $category->name }}
                     </td>
+
                     <td>
-                        {{ $category->products_count }}
+
+                        <span class="badge bg-dark">
+
+                            {{ $category->products_count }}
+
+                        </span>
+
                     </td>
 
-                        <td>
+                    <td>
 
-                            <button
-                                class="btn btn-warning btn-sm"
-                                data-bs-toggle="modal"
-                                data-bs-target="#editCategory{{ $category->id }}"
-                            >
-                                Edit
-                            </button>
+                            <div class="d-flex gap-2">
+<button
+    class="btn btn-outline-secondary btn-sm"
+    data-bs-toggle="modal"
+    data-bs-target="#editCategory{{ $category->id }}"
+>
+    <i class="bi bi-pencil-square"></i>
+</button>
 
-                            <form
-                                action="/admin/categories/{{ $category->id }}"
-                                method="POST"
-                                class="d-inline delete-form"
-                            >
+<button
+    class="btn btn-outline-danger btn-sm"
+>
+    <i class="bi bi-trash"></i>
+</button>
 
-                                @csrf
-                                @method('DELETE')
+                                </form>
 
-                                <button
-                                    class="btn btn-danger btn-sm"
-                                >
-                                    Delete
-                                </button>
+                            </div>
 
-                            </form>
-
-                        </td>
+                    </td>
 
                 </tr>
 
                 <div
-    class="modal fade"
-    id="editCategory{{ $category->id }}"
-    tabindex="-1"
->
+                    class="modal fade"
+                    id="editCategory{{ $category->id }}"
+                    tabindex="-1"
+                >
 
-    <div class="modal-dialog">
+                    <div class="modal-dialog">
 
-        <div class="modal-content">
+                        <div class="modal-content">
 
-            <form
-                action="/admin/categories/{{ $category->id }}"
-                method="POST"
-            >
+                            <form
+                                action="/admin/categories/{{ $category->id }}"
+                                method="POST"
+                            >
 
-                @csrf
-                @method('PUT')
+                                @csrf
+                                @method('PUT')
 
-                <div class="modal-header">
+                                <div class="modal-header">
 
-                    <h5 class="modal-title">
-                        Edit Category
-                    </h5>
+                                    <h5 class="modal-title">
+                                        Edit Category
+                                    </h5>
 
-                    <button
-                        type="button"
-                        class="btn-close"
-                        data-bs-dismiss="modal"
-                    ></button>
+                                    <button
+                                        type="button"
+                                        class="btn-close"
+                                        data-bs-dismiss="modal"
+                                    ></button>
+
+                                </div>
+
+                                <div class="modal-body">
+
+                                    <input
+                                        type="text"
+                                        name="name"
+                                        class="form-control"
+                                        value="{{ $category->name }}"
+                                        required
+                                    >
+
+                                </div>
+
+                                <div class="modal-footer">
+
+                                    <button
+                                        type="button"
+                                        class="btn btn-outline-secondary"
+                                        data-bs-dismiss="modal"
+                                    >
+                                        Cancel
+                                    </button>
+
+                                    <button
+                                        type="submit"
+                                        class="btn btn-dark"
+                                    >
+                                        Save Changes
+                                    </button>
+
+                                </div>
+
+                            </form>
+
+                        </div>
+
+                    </div>
 
                 </div>
 
-                <div class="modal-body">
+            @empty
 
-                    <input
-                        type="text"
-                        name="name"
-                        class="form-control"
-                        value="{{ $category->name }}"
+                <tr>
+
+                    <td
+                        colspan="4"
+                        class="text-center text-muted py-4"
                     >
+                        No categories found.
+                    </td>
 
-                </div>
+                </tr>
 
-                <div class="modal-footer">
-
-                    <button
-                        type="submit"
-                        class="btn btn-success"
-                    >
-                        Save Changes
-                    </button>
-
-                </div>
-
-            </form>
-
-        </div>
-
-    </div>
-
-</div>
-            @endforeach
+            @endforelse
 
             </tbody>
 
@@ -199,3 +298,37 @@
 </div>
 
 @endsection
+
+<script>
+
+document.addEventListener('DOMContentLoaded', function() {
+
+    document.querySelectorAll('.delete-form')
+        .forEach(form => {
+
+            form.addEventListener('submit', function(e) {
+
+                e.preventDefault();
+
+                Swal.fire({
+                    title: 'Delete Category?',
+                    text: 'This action cannot be undone.',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Delete',
+                    cancelButtonText: 'Cancel'
+                }).then((result) => {
+
+                    if (result.isConfirmed) {
+                        form.submit();
+                    }
+
+                });
+
+            });
+
+        });
+
+});
+
+</script>
