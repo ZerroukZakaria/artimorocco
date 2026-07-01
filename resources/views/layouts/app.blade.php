@@ -7,8 +7,12 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description"
+          content="ArtiMorocco est une plateforme dédiée à 
+          la promotion de l'artisanat marocain. Découvrez des 
+          produits artisanaux authentiques et les profils des artisans marocains.">
 
-    <title>@yield('title', 'ArtiMorocco')</title>
+    <title>@yield('title', 'ArtiMorocco - Découvrez l`artisanat marocain authentique')</title>
 
     <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"

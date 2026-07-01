@@ -148,7 +148,10 @@
 
     <div class="col-md-4">
 
-        <div class="card shadow h-100">
+        <div
+    class="card shadow h-100 dashboard-link"
+    onclick="window.location='/admin/users'"
+>
 
             <div class="card-body">
 
@@ -175,7 +178,10 @@
 
     <div class="col-md-4">
 
-        <div class="card shadow h-100">
+        <div
+    class="card shadow h-100 dashboard-link"
+    onclick="window.location='/admin/products'"
+>
 
             <div class="card-body">
 
@@ -202,7 +208,10 @@
 
     <div class="col-md-4">
 
-        <div class="card shadow h-100">
+        <div
+    class="card shadow h-100 dashboard-link"
+    onclick="window.location='/admin/categories'"
+>
 
             <div class="card-body">
 
@@ -276,11 +285,19 @@
 
                         <td>
 
-                            <span
-                                class="badge bg-secondary"
-                            >
-                                {{ $user->role }}
-                            </span>
+                            @if($user->role === 'admin')
+
+                                <span class="badge bg-danger">
+                                    Admin
+                                </span>
+
+                            @else
+
+                                <span class="badge bg-success">
+                                    Artisan
+                                </span>
+
+                            @endif
 
                         </td>
 
@@ -356,5 +373,20 @@
     </div>
 
 </div>
+
+
+
+<style>
+
+.dashboard-link {
+    cursor: pointer;
+    transition: all .2s ease;
+}
+
+.dashboard-link:hover {
+    transform: translateY(-4px);
+}
+
+</style>
 
 @endsection
